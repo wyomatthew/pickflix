@@ -33,7 +33,6 @@ services:
       - LOCAL_NETWORK=${PIA_LOCAL_NETWORK}
       - PORT_FORWARDING=1
       - PORT_PERSIST=1
-      - PORT_SCRIPT=/pia-shared/portupdate-qbittorrent.sh
     sysctls:
       - net.ipv4.conf.all.forwarding=1
       - net.ipv4.conf.all.src_valid_mark=1
@@ -88,6 +87,10 @@ services:
       test: [ "CMD", "curl", "--fail", "http://localhost:7878/radarr/ping" ]
       interval: 30s
       retries: 10
+    network_mode: "service:vpn"
+    depends_on:
+      vpn:
+        condition: service_healthy
     restart: unless-stopped
   # sonarr
   # https://hub.docker.com/r/linuxserver/sonarr
@@ -105,6 +108,10 @@ services:
       test: [ "CMD", "curl", "--fail", "http://localhost:8989/sonarr/ping" ]
       interval: 30s
       retries: 10
+    network_mode: "service:vpn"
+    depends_on:
+      vpn:
+        condition: service_healthy
     restart: unless-stopped
   # prowlarr
   # https://hub.docker.com/r/linuxserver/prowlarr
@@ -121,6 +128,10 @@ services:
       test: [ "CMD", "curl", "--fail", "http://localhost:9696/prowlarr/ping" ]
       interval: 30s
       retries: 10
+    network_mode: "service:vpn"
+    depends_on:
+      vpn:
+        condition: service_healthy
     restart: unless-stopped
   # flaresolverr
   # https://hub.docker.com/r/flaresolverr/flaresolverr
@@ -133,6 +144,10 @@ services:
       test: [ "CMD", "curl", "--fail", "http://localhost:8191" ]
       interval: 30s
       retries: 10
+    network_mode: "service:vpn"
+    depends_on:
+      vpn:
+        condition: service_healthy
     restart: unless-stopped
   # jellyfin
   # https://hub.docker.com/r/linuxserver/jellyfin
