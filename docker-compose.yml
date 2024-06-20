@@ -6,12 +6,10 @@ services:
     container_name: reverse_proxy
     volumes:
       - ${CONFIG_ROOT_DIR}/nginx.conf:/etc/nginx/nginx.conf
-      - ${BANANAS_CERT_PATH}:/etc/nginx/bananas.cert.pem
-      - ${BANANAS_KEY_PATH}:/etc/nginx/bananas.key.pem
-      - ${BANANAS_PASS_PATH}:/etc/nginx/bananas.pass.pem
+      - ${BANANAS_CERT_PATH}:/etc/nginx/cert.pem
+      - ${BANANAS_KEY_PATH}:/etc/nginx/key.pem
     ports:
       - 443:443
-      - 80:80
     healthcheck:
       test: [ "CMD", "curl", "--fail", "http://localhost/healthcheck" ]
       interval: 30s
@@ -75,22 +73,19 @@ services:
     depends_on:
       vpn:
         condition: service_healthy
-  # ombi
-  # https://hub.docker.com/r/linuxserver/ombi
-  ombi:
-    image: lscr.io/linuxserver/ombi:latest
-    container_name: ombi
+  # jellyseerr
+  # https://github.com/Fallenbagel/jellyseerr
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
     environment:
       - PUID=${USER_ID}
       - PGID=${GROUP_ID}
       - TZ=${TIMEZONE}
-      - BASE_URL=/ombi
+    ports:
+      - 5055:5055
     volumes:
-      - ${CONFIG_ROOT_DIR}/ombi:/config
-    healthcheck:
-      test: [ "CMD", "curl", "--fail", "http://localhost:3579/ombi/ping" ]
-      interval: 30s
-      retries: 10
+      - ${CONFIG_ROOT_DIR}/jellyseerr:/app/config
     restart: unless-stopped
   # radarr
   # https://hub.docker.com/r/linuxserver/radarr
