@@ -82,11 +82,13 @@ services:
       - PUID=${USER_ID}
       - PGID=${GROUP_ID}
       - TZ=${TIMEZONE}
-    ports:
-      - 5055:5055
     volumes:
       - ${CONFIG_ROOT_DIR}/jellyseerr:/app/config
     restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "--fail", "http://localhost:5055" ]
+      interval: 30s
+      retries: 10
   # radarr
   # https://hub.docker.com/r/linuxserver/radarr
   radarr:
@@ -199,7 +201,7 @@ services:
       - ${CONFIG_ROOT_DIR}/jellyfin:/config
       - ${DATA_ROOT_DIR}:/data
     healthcheck:
-      test: [ "CMD", "curl", "--fail", "http://localhost:8096/jellyfin/health" ]
+      test: [ "CMD", "curl", "--fail", "http://localhost:8096/health" ]
       interval: 30s
       retries: 10
     network_mode: "service:vpn"
