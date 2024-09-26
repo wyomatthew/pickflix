@@ -1,0 +1,4 @@
+---
+general:
+  auto_update: true
+  base_url: '/bazarr'
