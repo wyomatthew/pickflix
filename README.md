@@ -33,5 +33,5 @@ You can then spin up the software stack with
 
 ```bash
 docker compose pull
-docker compose up
+docker compose up -d
 ```
