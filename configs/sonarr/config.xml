@@ -1,5 +1,5 @@
 <Config>
-  <UrlBase></UrlBase>
+  <UrlBase>/sonarr</UrlBase>
   <InstanceName>Sonarr</InstanceName>
   <UpdateMechanism>Docker</UpdateMechanism>
 </Config>
