@@ -1,5 +1,5 @@
 <Config>
-  <UrlBase></UrlBase>
+  <UrlBase>/prowlarr</UrlBase>
   <InstanceName>Prowlarr</InstanceName>
   <UpdateMechanism>Docker</UpdateMechanism>
 </Config>
