@@ -1,0 +1,5 @@
+<Config>
+  <UrlBase>/radarr</UrlBase>
+  <InstanceName>Radarr</InstanceName>
+  <UpdateMechanism>Docker</UpdateMechanism>
+</Config>
