@@ -63,7 +63,7 @@ services:
       - DOCKER_MODS=ghcr.io/gabe565/linuxserver-mod-vuetorrent # gives alternative web UI built in Vue.js
     volumes:
       - ${CONFIG_ROOT_DIR}/qbittorrent:/config
-      - ${DOWNLOADS_ROOT_DIR}:/data/torrents
+      - ${DATA_ROOT_DIR}/torrents:/data/torrents
     restart: unless-stopped
     healthcheck:
       test: [ "CMD", "curl", "--fail", "http://localhost:8080", "https://google.com" ]
