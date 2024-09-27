@@ -80,6 +80,15 @@ Port: `8080`
 Username: `admin`
 Password: `admin`
 
+For Radarr to properly commmunicate with Jellyfin, you need to configure the
+media root folder to point to the shared volume. Go to Settings > Media
+Management and add the movie volume to "Root Folders", by default
+`/data/movies`.
+
+To improve the releases grabbed by Radarr, it is recommended to reconfigure
+your quality profile. A detailed setup is provided by this guide:
+<https://trash-guides.info/Radarr/radarr-setup-quality-profiles/>
+
 ### Sonarr
 
 Accessed at <https://localhost/sonarr>
@@ -94,6 +103,17 @@ Host: `localhost`
 Port: `8080`
 Username: `admin`
 Password: `admin`
+
+For Sonarr to properly commmunicate with Jellyfin, you need to configure the
+media root folders to point to the shared volumes. Go to Settings > Media
+Management and add the shows/anime volumes to "Root Folders", by default
+`/data/shows` and `/data/anime` respectively.
+
+To improve the releases grabbed by Sonarr, it is recommended to reconfigure
+your quality profiles. The following guides provide detailed setups:
+
+- Shows <https://trash-guides.info/Sonarr/sonarr-setup-quality-profiles/>
+- Anime <https://trash-guides.info/Sonarr/sonarr-setup-quality-profiles-anime/>
 
 ### Prowlarr
 
