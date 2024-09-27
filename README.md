@@ -142,3 +142,8 @@ By default, the credentials are:
 
 Username: `admin`
 Password: `admin`
+
+For Radarr/Sonarr and qBittorrent to properly communicate, you will need
+to make sure torrented media are written to the directory mounted as a
+volume. Go to Settings > Downloads and overwrite "Default Save Path (complete)"
+to point to the mounted volume, by default this is `/data/torrents`.
