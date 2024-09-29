@@ -10,6 +10,7 @@ services:
       - ${KEY_PATH}:/etc/nginx/key.pem
     ports:
       - 443:443
+      - 80:80
     healthcheck:
       test: [ "CMD", "curl", "--fail", "http://localhost/healthcheck" ]
       interval: 30s
