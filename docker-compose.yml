@@ -46,7 +46,7 @@ services:
       test: ping -c 1 www.google.com || exit 1
       interval: 5s
       timeout: 10s
-      retries: 3
+      retries: 10
     restart: unless-stopped
     labels:
       - com.centurylinklabs.watchtower.enable=false
