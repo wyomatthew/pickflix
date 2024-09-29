@@ -87,7 +87,7 @@ services:
       - ${CONFIG_ROOT_DIR}/jellyseerr:/app/config
     restart: unless-stopped
     healthcheck:
-      test: [ "CMD", "curl", "--fail", "http://localhost:5055" ]
+      test: [ "CMD-SHELL", "wget http://localhost:5055/api/v1/status -qO /dev/null || exit 1" ]
       interval: 30s
       retries: 10
   # radarr
