@@ -46,7 +46,7 @@ services:
       test: ping -c 1 www.google.com || exit 1
       interval: 5s
       timeout: 10s
-      retries: 3
+      retries: 10
     restart: unless-stopped
     labels:
       - com.centurylinklabs.watchtower.enable=false
@@ -206,4 +206,20 @@ services:
       interval: 30s
       retries: 10
     network_mode: "service:vpn"
+    restart: unless-stopped
+  # wizarr
+  # https://github.com/wizarrrr/wizarr
+  wizarr:
+    image: ghcr.io/wizarrrr/wizarr:latest
+    container_name: wizarr
+    environment:
+      - PUID=${USER_ID}
+      - PGID=${GROUP_ID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${CONFIG_ROOT_DIR}/wizarr:/data/database
+    healthcheck:
+      test: [ "CMD", "curl", "--fail", "http://localhost:5690" ]
+      interval: 30s
+      retries: 10
     restart: unless-stopped
