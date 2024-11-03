@@ -1,0 +1,133 @@
+vars: {
+  d2-config: {
+    layout-engine: elk
+    theme-id: 300
+  }
+}
+
+user: {
+  shape: person
+  class: user
+}
+
+admin: {
+  shape: person
+  class: admin
+}
+
+media indexers: {
+  shape: cloud
+}
+
+torrent peers: {
+  shape: cloud
+}
+
+subtitle indexers: {
+  shape: cloud
+}
+
+cloudflare proxy: {
+  shape: cloud
+  icon: https://raw.githubusercontent.com/loganmarchione/homelab-svg-assets/refs/heads/main/assets/cloudflare.svg
+}
+
+pickflix: {
+  reverse proxy: {
+    icon: https://raw.githubusercontent.com/loganmarchione/homelab-svg-assets/refs/heads/main/assets/nginx.svg
+
+    streaming\.pickflix\.mov
+    requests\.pickflix\.mov
+    welcome\.pickflix\.mov
+    melons\.tailceb2d9\.ts\.net
+  }
+
+  jellyfin: {
+    shape: rectangle
+    icon: https://raw.githubusercontent.com/loganmarchione/homelab-svg-assets/refs/heads/main/assets/jellyfin.svg
+  }
+
+  jellyseerr: {
+    icon: https://raw.githubusercontent.com/loganmarchione/homelab-svg-assets/refs/heads/main/assets/jellyseerr.svg
+  }
+
+  wizarr: {
+    icon: https://raw.githubusercontent.com/loganmarchione/homelab-svg-assets/refs/heads/main/assets/wizarr.svg
+  }
+
+  intranet: {
+    radarr: {
+      icon: https://raw.githubusercontent.com/Radarr/Radarr/refs/heads/develop/Logo/Radarr.svg
+    }
+    sonarr: {
+      icon: https://raw.githubusercontent.com/Sonarr/Sonarr/refs/heads/develop/Logo/Sonarr.svg
+    }
+    prowlarr: {
+      icon: https://raw.githubusercontent.com/Prowlarr/Prowlarr/refs/heads/develop/Logo/Prowlarr.svg
+    }
+    qbittorrent: {
+      icon: https://upload.wikimedia.org/wikipedia/commons/6/66/New_qBittorrent_Logo.svg
+    }
+    bazarr: {
+      icon: https://raw.githubusercontent.com/loganmarchione/homelab-svg-assets/refs/heads/main/assets/bazarr.svg
+    }
+    pia vpn: {
+      icon: https://raw.githubusercontent.com/loganmarchione/homelab-svg-assets/refs/heads/main/assets/privateinternetaccess.svg
+    }
+
+    radarr -> prowlarr
+    radarr -> qbittorrent
+    radarr -> bazarr
+
+    sonarr -> prowlarr
+    sonarr -> qbittorrent
+    radarr -> bazarr
+  }
+
+  reverse proxy.streaming\.pickflix\.mov -> jellyfin: {
+    class: user
+  }
+  reverse proxy.requests\.pickflix\.mov -> jellyseerr: {
+    class: user
+  }
+  reverse proxy.welcome\.pickflix\.mov -> wizarr: {
+    class: shared
+  }
+  reverse proxy.melons\.tailceb2d9\.ts\.net -> intranet: {
+    class: admin
+  }
+
+  jellyseerr -> intranet.radarr
+  jellyseerr -> intranet.sonarr
+
+  intranet.radarr -> jellyfin
+  intranet.sonarr -> jellyfin
+}
+
+user -> cloudflare proxy: {
+  class: user
+}
+admin -> cloudflare proxy: {
+  class: admin
+}
+
+admin -> pickflix.reverse proxy.melons\.tailceb2d9\.ts\.net: {
+  class: admin
+}
+
+cloudflare proxy -> pickflix.reverse proxy.streaming\.pickflix\.mov: {
+  class: user
+}
+cloudflare proxy -> pickflix.reverse proxy.requests\.pickflix\.mov: {
+  class: user
+}
+cloudflare proxy -> pickflix.reverse proxy.welcome\.pickflix\.mov: {
+  class: shared
+}
+
+pickflix.intranet.prowlarr -> pickflix.intranet.pia vpn -> media indexers
+pickflix.intranet.bazarr -> pickflix.intranet.pia vpn -> subtitle indexers
+pickflix.intranet.qbittorrent -> pickflix.intranet.pia vpn -> torrent peers
+
+pickflix.wizarr -> pickflix.jellyfin
+pickflix.jellyseerr -> pickflix.jellyfin
